@@ -40,5 +40,21 @@ pipeline {
                 }
             }
         }
+        stage("copyfile") {
+            steps {
+                script {
+                    swName="app"
+                    currentDate=$(date "+%Y%m%d")
+                    currentTime=$(date "+%Y%m%d-%H%M")
+                    newFolderName=$swName-$currentTime
+                    
+                    go get -d -u -v || true
+                                        
+                    mkdir -p /home/idx/Desktop/buildtest/$newFolderName/$swName
+                    cp -r /var/lib/jenkins/workspace/test01 /home/idx/Desktop/buildtest/$newFolderName/$swName
+                    rm -rf /var/lib/jenkins/workspace/*
+                }
+            }
+        }
     }   
 }
